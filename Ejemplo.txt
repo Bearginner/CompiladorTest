@@ -1,0 +1,5 @@
+Ejemplo
+
+clase a {
+a = a + 2:
+}

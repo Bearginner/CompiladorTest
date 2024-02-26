@@ -1,5 +1,3 @@
-package compilador;
-
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
@@ -189,7 +187,7 @@ public class Scanner {
         if (token.equals("="))
             tokens.add(new String[] {token, "Operador de asignacion", String.valueOf(LineaCont ) });
         else
-            tokens.add(new String[] {token, "Operador aritmético", String.valueOf(LineaCont ) });
+            tokens.add(new String[] {token, "Operador aritmetico", String.valueOf(LineaCont ) });
         token = "";
         return true;
     }

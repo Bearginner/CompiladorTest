@@ -1,6 +1,3 @@
-
-package compilador;
-
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -83,6 +80,36 @@ public class Parser {
             return true;
     }
 
+    // Función para Leer
+    private static boolean leer() {
+        if (!lista.get(cont)[1].equals("Identificador"))
+            return false;
+        cont++;
+        if (!lista.get(cont)[0].equals("=")){
+            error = "Se esperaba una asignacion "+"linea: " + lista.get(cont)[1];
+            return false;
+        }
+        cont++;
+        if (!lista.get(cont)[0].equals("leer"))
+            return false;
+        cont++;
+        if (!lista.get(cont)[1].equals("Parentesis izquierdo")){
+            error = "Se esperaba '(' "+"linea: " + lista.get(cont)[1];
+            return false;
+        }
+        cont++;
+        if (!lista.get(cont)[1].equals("Parentesis derecho")){
+            error = "Se esperaba ')' "+"linea: " + lista.get(cont)[1];
+            return false;
+        }
+        cont++;
+        if (lista.get(cont)[0].equals(";"))
+            return true;
+        error = "Se esperaba ';' "+"linea: " + lista.get(cont)[1];
+        return false;
+    }
+
+    // Función para mostrar
     private static boolean mostrar() {
         if (!lista.get(cont)[0].equals("mostrar"))
             return false;
@@ -99,83 +126,18 @@ public class Parser {
                 return false;
             }
             cont++;
-            if (lista.get(cont)[0].equals(";"))
+         /*   if (lista.get(cont)[0].equals(";"))
                 return true;
             error = "Se esperaba ';' "+"linea: " + lista.get(cont)[1];
-            return false;
+            return false; */ 
         }
-        if (!lista.get(cont)[0].equals("\"")){
-            error = "Se esperaba una cadena "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        cont++;
-        if (!lista.get(cont)[1].equals("cadena")){
-            error = "Se esperaba una cadena "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        cont++;
-        if (!lista.get(cont)[0].equals("\"")){{
-            error = "Se esperaba una cadena "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        }
-        cont++;
-        if (lista.get(cont)[1].equals("Parentesis derecho")) {
-            cont++;
-            if (lista.get(cont)[0].equals(";"))
-                return true;
-            error = "Se esperaba ';' "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        if (!lista.get(cont)[1].equals("coma")){
-            error = "Se esperaba ',' concatenacion "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        cont++;
-        if (!lista.get(cont)[1].equals("Identificador")){
-            error = "Se esperaba una cadena "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        cont++;
-        if (!lista.get(cont)[1].equals("Parentesis derecho")){
-            error = "Se esperaba ')' "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        cont++;
         if (lista.get(cont)[0].equals(";"))
             return true;
         error = "Se esperaba ';' "+"linea: " + lista.get(cont)[1];
         return false;
     }
 
-    private static boolean leer() {
-        if (!lista.get(cont)[1].equals("Identificador"))
-            return false;
-        cont++;
-        if (!lista.get(cont)[0].equals("=")){
-            error = "Se esperaba una asignacion "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        cont++;
-        if (!lista.get(cont)[0].equals("leerdato"))
-            return false;
-        cont++;
-        if (!lista.get(cont)[1].equals("Parentesis izquierdo")){
-            error = "Se esperaba '(' "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        cont++;
-        if (!lista.get(cont)[1].equals("Parentesis derecho")){
-            error = "Se esperaba ')' "+"linea: " + lista.get(cont)[1];
-            return false;
-        }
-        cont++;
-        if (lista.get(cont)[0].equals(";"))
-            return true;
-        error = "Se esperaba ';' "+"linea: " + lista.get(cont)[1];
-        return false;
-    }
-
+    // Función para asignar
     private static boolean asig() {
         if (!lista.get(cont)[1].equals("Identificador"))
             return false;
@@ -191,25 +153,21 @@ public class Parser {
         return true;
     }
 
+    // Función para calcular
     private static boolean calc() {
-        if (!(lista.get(cont)[1].equals("Identificador") ||
-                lista.get(cont)[1].equals("numero"))) {
+        if (!(lista.get(cont)[1].equals("Identificador") || lista.get(cont)[1].equals("Numero"))) {
             error = "Se esperaba una variable o constante "+"linea: " + lista.get(cont)[1];
             cont -= 2;
             return false;
         }
         cont++;
-        if (lista.get(cont)[0].equals(";")){
-            return true;
-        }
-        if (!(lista.get(cont)[1].equals("Operador Aritmetico"))) {
+        if (!(lista.get(cont)[1].equals("Operador aritmetico"))) {
             error = "Se esperaba ';' o un operador arit "+"linea: " + lista.get(cont)[1];
             cont--;
             return false;
         }
         cont++;
-        if (!(lista.get(cont)[1].equals("Identificador") ||
-                lista.get(cont)[1].equals("numero"))) {
+        if (!(lista.get(cont)[1].equals("Identificador") || lista.get(cont)[1].equals("Numero"))) {
             error = "Se esperaba una variable o constante "+"linea: " + lista.get(cont)[1];
             cont--;
             return false;
